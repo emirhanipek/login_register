@@ -40,49 +40,73 @@ class UserController {
 
         }
 
-    public function userLogin($email, $password) {
-        include '../../config.php';
-
-        // Formdan gelen verileri al
-        $email = $_POST['email'];
-        $password = $_POST['pwd'];
-
-        // SQL sorgusu (email'i kontrol et)
-        $sql = "SELECT * FROM user WHERE email = ?";
-        $stmt = $conn->prepare($sql);
-
-        // Parametreleri bağla
-        $stmt->bind_param("s", $email);
-
-        // Sorguyu çalıştır
-        $stmt->execute();
-
-        // Sonuçları al
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            // Kullanıcı bulundu
-            $user = $result->fetch_assoc();
-            
-            // Şifreyi kontrol et
-            if (password_verify($password, $user['password'])) {
-                header("Location: ../../index.php");
-                die();
+        public function userLogin($email, $password) {
+            include '../../config.php';
+        
+            // Formdan gelen verileri al
+            $email = $_POST['email'];
+            $password = $_POST['pwd'];
+        
+            // SQL sorgusu (email'i kontrol et)
+            $sql = "
+                SELECT u.*, ud.adres, ud.sehir, ud.il, ud.hakkinda, ud.telefon, ud.kayit_tarihi
+                FROM user u
+                LEFT JOIN user_detay ud ON u.user_id = ud.user_id
+                WHERE u.email = ?
+            ";
+        
+            $stmt = $conn->prepare($sql);
+        
+            // Parametreleri bağla
+            $stmt->bind_param("s", $email);
+        
+            // Sorguyu çalıştır
+            $stmt->execute();
+        
+            // Sonuçları al
+            $result = $stmt->get_result();
+        
+            if ($result->num_rows > 0) {
+                // Kullanıcı bulundu
+                $user = $result->fetch_assoc();
+        
+                // Oturum başlat
+                session_start();
+        
+                // Şifreyi kontrol et
+                if (password_verify($password, $user['password'])) {
+                    // Kullanıcı bilgilerini session'a kaydet
+                    $_SESSION["kullanici"] = [
+                        'user_id' => $user['user_id'],
+                        'username' => $user['username'],
+                        'email' => $user['email'],
+                        'adres' => $user['adres'],
+                        'sehir' => $user['sehir'],
+                        'il' => $user['il'],
+                        'hakkinda' => $user['hakkinda'],
+                        'telefon' => $user['telefon'],
+                        'kayit_tarihi' => $user['kayit_tarihi']
+                    ];
+        
+                    // Giriş başarılı, yönlendir
+                    header("Location: ../../index3.php");
+                    die();
+                } else {
+                    // Yanlış şifre
+                    header("Location: ../../views/user/signin-2.php?error=wrongpassword");
+                    die();
+                }
             } else {
-                header("Location: ../../views/user/signin-2.php?error=wrongpassword");
+                // Kullanıcı bulunamadı
+                header("Location: ../../views/user/signin-2.php?error=wrongemail");
                 die();
             }
-        } else {
-            // Kullanıcı bulunamadı
-            header("Location: ../../views/user/signin-2.php?error=wrongemail");
-            die();
+        
+            // Bağlantıyı kapat
+            $stmt->close();
+            $conn->close();
         }
-
-        // Bağlantıyı kapat
-        $stmt->close();
-        $conn->close();
-
-    }
+        
 
     public function passwordReset($email) {
         include '../../config.php';
