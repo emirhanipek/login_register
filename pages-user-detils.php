@@ -46,14 +46,14 @@
                 <div class="card overflow-hidden radius-10">
                   <div class="profile-cover bg-dark position-relative mb-4">
                     <div class="user-profile-avatar shadow position-absolute top-50 start-0 translate-middle-x">
-                      <img src="assets/images/avatars/06.png" alt="...">
+                      <img src="assets/user_images/<?php echo $_SESSION['kullanici']['user_foto']; ?>.png" alt="...">
                     </div>
                   </div>
                   <div class="card-body">
                     <div class="mt-5 d-flex align-items-start justify-content-between">
                       <div class="">
                         <h3 class="mb-2"><?php echo $_SESSION['kullanici']['username']; ?></h3>
-                        <p class="mb-1"><?php echo $_SESSION['kullanici']['adres']. '/' .$_SESSION['kullanici']['sehir'] ; ?></p>
+                        <p class="mb-1"><?php echo $_SESSION['kullanici']['ülke']. '/' . $_SESSION['kullanici']['ilce']. " " .$_SESSION['kullanici']['il'] ; ?></p>
                         <p><?php echo $_SESSION['kullanici']['email']; ?></p>
                       </div>
                     </div>
@@ -70,51 +70,38 @@
                 <div class="card radius-10">
                   <div class="card-body">
                     <h5 class="mb-3">Location</h5>
-                     <p class="mb-0"><ion-icon name="compass-sharp" class="me-2"></ion-icon><?php echo $_SESSION['kullanici']['adres']. ' / ' .$_SESSION['kullanici']['sehir'] ; ?></p>
+                     <p class="mb-0"><ion-icon name="compass-sharp" class="me-2"></ion-icon><?php echo $_SESSION['kullanici']['ülke']?></p>
+                     <p class="mb-0"><ion-icon name="call-sharp" class="me-2"></ion-icon><?php echo $_SESSION['kullanici']['telefon']?></p>
                   </div>
                 </div>
 
                 <div class="card radius-10">
                   <div class="card-body">
                     <h5 class="mb-3">Connect</h5>
-                     <p class=""><ion-icon name="globe-sharp" class="me-2"></ion-icon>www.example.com</p>
-                     <p class=""><ion-icon name="logo-facebook" class="me-2"></ion-icon>Facebook</p>
-                     <p class=""><ion-icon name="logo-twitter" class="me-2"></ion-icon>Twitter</p>
-                     <p class="mb-0"><ion-icon name="logo-linkedin" class="me-2"></ion-icon>LinkedIn</p>
+                     <p class=""><ion-icon name="globe-sharp" class="me-2"></ion-icon><?php echo $_SESSION['kullanici']['website_url']?></p>
+                     <p class=""><ion-icon name="logo-facebook" class="me-2"></ion-icon><?php echo $_SESSION['kullanici']['facebook_url']?></p>
+                     <p class=""><ion-icon name="logo-twitter" class="me-2"></ion-icon><?php echo $_SESSION['kullanici']['insta_url']?></p>
+                     <p class="mb-0"><ion-icon name="logo-linkedin" class="me-2"></ion-icon><?php echo $_SESSION['kullanici']['linkedin_url']?></p>
                   </div>
                 </div>
 
                 <div class="card radius-10">
                   <div class="card-body">
                     <h5 class="mb-3">Skills</h5>
-                     <div class="mb-3">
-                      <p class="mb-1">Web Design</p>
+                     
+                     
+                     
+                     
+                     <div class="mb-0">
+                      <p class="mb-1"><?php echo $_SESSION['kullanici']['yetenek_1']?></p>
                       <div class="progress" style="height: 5px;">
-                       <div class="progress-bar" role="progressbar" style="width: 45%"></div>
-                      </div>
-                     </div>
-                     <div class="mb-3">
-                      <p class="mb-1">HTML5</p>
-                      <div class="progress" style="height: 5px;">
-                       <div class="progress-bar" role="progressbar" style="width: 55%"></div>
-                      </div>
-                     </div>
-                     <div class="mb-3">
-                      <p class="mb-1">PHP7</p>
-                      <div class="progress" style="height: 5px;">
-                       <div class="progress-bar" role="progressbar" style="width: 65%"></div>
-                      </div>
-                     </div>
-                     <div class="mb-3">
-                      <p class="mb-1">CSS3</p>
-                      <div class="progress" style="height: 5px;">
-                       <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                       <div class="progress-bar" role="progressbar" style="width: <?php echo $_SESSION['kullanici']['derece_1']?>%"></div>
                       </div>
                      </div>
                      <div class="mb-0">
-                      <p class="mb-1">Photoshop</p>
+                      <p class="mb-1"><?php echo $_SESSION['kullanici']['yetenek_2']?></p>
                       <div class="progress" style="height: 5px;">
-                       <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                       <div class="progress-bar" role="progressbar" style="width: <?php echo $_SESSION['kullanici']['derece_2']?>%"></div>
                       </div>
                      </div>
 

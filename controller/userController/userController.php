@@ -49,7 +49,8 @@ class UserController {
         
             // SQL sorgusu (email'i kontrol et)
             $sql = "
-                SELECT u.*, ud.adres, ud.sehir, ud.il, ud.hakkinda, ud.telefon, ud.kayit_tarihi
+                SELECT u.*, ud.ülke, ud.ilce, ud.il, ud.hakkinda, ud.telefon, ud.kayit_tarihi,ud.banner_foto,ud.user_foto,
+                ud.website_url,ud.insta_url,ud.facebook_url,ud.linkedin_url,ud.yetenek_1,ud.derece_1,ud.yetenek_2,ud.derece_2
                 FROM user u
                 LEFT JOIN user_detay ud ON u.user_id = ud.user_id
                 WHERE u.email = ?
@@ -79,9 +80,19 @@ class UserController {
                     $_SESSION["kullanici"] = [
                         'user_id' => $user['user_id'],
                         'username' => $user['username'],
+                        'insta_url' => $user['insta_url'],
+                        'facebook_url' => $user['facebook_url'],
+                        'linkedin_url' => $user['linkedin_url'],
+                        'yetenek_1' => $user['yetenek_1'],
+                        'yetenek_2' => $user['yetenek_2'],
+                        'derece_1' => $user['derece_1'],
+                        'derece_2' => $user['derece_2'],
+                        'banner_foto' => $user['banner_foto'],
+                        'user_foto' => $user['user_foto'],
+                        'website_url' => $user['website_url'],
                         'email' => $user['email'],
-                        'adres' => $user['adres'],
-                        'sehir' => $user['sehir'],
+                        'ülke' => $user['ülke'],
+                        'ilce' => $user['ilce'],
                         'il' => $user['il'],
                         'hakkinda' => $user['hakkinda'],
                         'telefon' => $user['telefon'],
